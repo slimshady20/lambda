@@ -5,7 +5,11 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
-@Entity(name="movie") @Component
+@Entity(name="movie")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class Movie {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movieSeq;
@@ -14,8 +18,6 @@ public class Movie {
     @Column(length = 100) private String gap;
     @Column(length = 50) private String rankDate;
 
-
-    public Movie(){}
 
     @Builder
     public Movie(String rank, String gap, String title,String rankDate){

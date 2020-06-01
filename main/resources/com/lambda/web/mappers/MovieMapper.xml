@@ -19,15 +19,20 @@
             parameterType="com.lambda.web.movies.MovieDTO">
          delete from movie where movie_seq like #{movieSeq}
     </delete>
-    <select id="countMovies" resultType="User">
+
+    <select id="selectMovies" resultType="com.lambda.web.movies.MovieDTO"
+            parameterType="com.lambda.web.proxy.Pager">
      select movie_seq movieSeq, rank, title, rank_date rankDate, gap
       from movie
+      limit #{rowStart}, #{pageSize}
+
 
     </select>
-    <select id="selectMovie" resultType="com.lambda.web.movies.MovieDTO">
+    <select id="selectMovie" resultType="com.lambda.web.movies.MovieDTO"
+                                parameterType="string">
           select movie_seq movieSeq, rank, title, rank_date rankDate
       from movie
-      where movie_seq = #{movieSeq}
+      where movie_seq = #{value}
     </select>
     <select id="count" resultType="int">
       select count(*)

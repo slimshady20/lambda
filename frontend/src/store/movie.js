@@ -8,7 +8,7 @@ const state={
 const actions = {
     async search({commit}, searchWord) {
         alert('검색어: ' + searchWord)
-        axios.get(state.context + "movie/" + searchWord)
+        axios.get(state.context + `movie/list/0/${searchWord}`)  //  "movie/list/0/" + searchWord
             .then(({data}) => {
                 alert('검색된 결과 수'+data.count)
                 commit('SEARCH', data)
@@ -23,7 +23,7 @@ const actions = {
 }
 const mutations={
     SEARCH(state,data){
-        alert("뮤테이션에서 검색된 결과수 "+data.count)
+        alert("영화 뮤테이션에서 검색된 결과수 "+data.count)
         state.movie=[]
         state.count = data.count
         data.list.forEach(item=>{
@@ -32,13 +32,13 @@ const mutations={
                 title: item.title,
                 gap: item.gap,
                 rankDate: item.rankDate
-                // 뭐가문제지?
+
             })
         })
     }
 }
 const getters={
-    movie: state => state.movie,
+    movie: state => state.movie,  // json이라 , 걸어줘야함
     count:  state => state.count
 }
 

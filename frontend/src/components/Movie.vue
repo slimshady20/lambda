@@ -1,6 +1,12 @@
 <template>
     <div>
-        <h3> 검색결과: {{count}}</h3>
+        <div>
+            <input id="search" v-model="searchWord" type="text" style=" background-repeat: no-repeat; background-position: 88% 50%, 98% 50%;" title="검색">
+        </div>
+        <div id="box">
+            <input  @click="search" id="google_search" type="button" value="Google 검색">
+        </div>
+        <div><h3>>검색된 수 : {{count}}</h3></div>
         <v-simple-table>
             <template v-slot:default>
                 <thead>
@@ -32,9 +38,13 @@
     export default {
         data(){
             return{
-                page:1
+                page:1 ,
+                searchWord: ''
             }
         },
+        methods:{
+            search(){
+                alert("검색단어: "+ this.searchWord);}},
         computed: {
             ...mapState({
                 count: state => state.movie.count,
@@ -46,5 +56,25 @@
 </script>
 
 <style scoped>
-
+    #search{
+        display: block;
+        margin: 0 auto;
+        width: 550px;
+        height: 50px;
+        font-size: 15pt;
+        box-shadow: 3px 3px 5px #C3C3C3;
+        border: 1px solid #EAEAEA;
+    }
+    #box{
+        text-align: center;
+    }
+    #google_search{
+        width: 135px;
+        height: 40px;
+        margin: 30px 3px;
+        border: none;
+        background-color: #F4F4F4;
+        font-weight: bold;
+        color: grey;
+    }
 </style>
