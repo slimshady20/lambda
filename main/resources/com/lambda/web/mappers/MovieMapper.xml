@@ -24,7 +24,7 @@
             parameterType="com.lambda.web.proxy.Pager">
      select movie_seq movieSeq, rank, title, rank_date rankDate, gap
       from movie
-      limit #{rowStart}, #{pageSize}
+      limit #{rowStart}, #{pageSize}    /* rowStart 번째부터  pagesize수만큼 가져옴*/
 
 
     </select>

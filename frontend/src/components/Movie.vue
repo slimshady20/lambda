@@ -27,8 +27,11 @@
                 </tbody>
             </template>
         </v-simple-table>
-        <div class ="text-center">
-            <v-pagination v-model="page" :length="5" :total-visible="5"></v-pagination>
+        <div id="app-3" class ="text-center" style="margin:0 auto; width: 500px; height: 100px">
+            <!--<v-pagination v-model="page" :length="5" :total-visible="5" label="Toggle circle"></v-pagination>-->
+        <span v-if="existPrev" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px">이전</span>
+        <span v-for="i of arr"  :key="i" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px" >{{i+5}}</span>
+        <span v-if="existNext" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px">다음</span>
         </div>
     </div>
 </template>
@@ -39,7 +42,10 @@
         data(){
             return{
                 page:1 ,
-                searchWord: ''
+                searchWord: '',
+                existPrev: true,
+                existNext: true,
+                arr:[]
             }
         },
         methods:{

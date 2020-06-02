@@ -27,11 +27,13 @@ public class MovieController extends Proxy {
         }else{
             pxy.print("검색어가 " + searchWord);
         }
+
         pager.setNowPage(pxy.integer(pageNumber));
         pager.setBlockSize(5);
         pager.setPageSize(5);
-
-        IFunction<Pager, List<MovieDTO>> f = p -> movieMapper.selectMovies(p); // parameterType = Pager, resultType = MovieDTO in MoiveMapper.xml
+        pager.paging();
+        IFunction<Pager, List<MovieDTO>> f = p -> movieMapper.selectMovies(p);
+        // parameterType = Pager, resultType = MovieDTO in MoiveMapper.xml
         List<MovieDTO> l = f.apply(pager);
         pxy.print("*******************************");
         for(MovieDTO m : l){ // 향상된 for 문 p 166 for(타입변수명 : 배열또는 컬렉션) {  반복할 문장 }
@@ -39,7 +41,7 @@ public class MovieController extends Proxy {
         }
      //   pxy.print(l.get(0).toString());
             box.clear();
-        box.put("count" ,l.size());
+        box.put("pager" , pager);
         box.put("list",l);
         return box.get();
         }
