@@ -4,6 +4,7 @@ const state={
     context: 'http://localhost:5000/',
     soccer: [],
     movies: [],
+    musics: [],
     pager: {},
     pageNumber: 0,
     searchWord: 'null'
