@@ -35,6 +35,9 @@
 <script>
         import { mapState } from "vuex";
         export default {
+                created(){
+                        alert('축구 페이지')
+                },
                 data () {
                         return {
                                 page: 1

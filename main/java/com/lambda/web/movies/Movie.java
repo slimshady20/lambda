@@ -5,9 +5,8 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
-@Entity(name="movie")
-@Getter
-@Setter
+@Entity
+@Data
 @ToString
 @NoArgsConstructor
 public class Movie {
@@ -25,45 +24,5 @@ public class Movie {
         this.title= title;
         this.gap= gap;
         this.rankDate= rankDate;
-    }
-
-    public Long getMovieSeq() {
-        return movieSeq;
-    }
-
-    public void setMovieSeq(Long movieSeq) {
-        this.movieSeq = movieSeq;
-    }
-
-    public String getRank() {
-        return rank;
-    }
-
-    public void setRank(String rank) {
-        this.rank = rank;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getGap() {
-        return gap;
-    }
-
-    public void setGap(String gap) {
-        this.gap = gap;
-    }
-
-    public String getRankDate() {
-        return rankDate;
-    }
-
-    public void setRankDate(String rankDate) {
-        this.rankDate = rankDate;
     }
 }
