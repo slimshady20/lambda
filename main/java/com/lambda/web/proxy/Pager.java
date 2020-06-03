@@ -15,7 +15,7 @@ public class Pager {
    private String searchWord;
    public void paging(){
        rowCount = movieMapper.count();
-       rowStart = nowPage * pageSize; // 0
+       rowStart = nowPage * pageSize ; // 0
        rowEnd = (nowPage != (pageCount -1)) ? rowStart + ( pageSize-1): rowCount-1; // 4 0부터 시작하니 pagecount -1 해서 하나씩 낮춰줘야함 nowPage가 index
        pageCount = (rowCount % pageSize != 0) ? rowCount / pageSize+1 : rowCount / pageSize; // 10
      //  pageSize =5;

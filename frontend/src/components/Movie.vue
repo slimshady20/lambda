@@ -1,12 +1,11 @@
 <template>
     <div>
         <div>
-            <input id="search" v-model="searchWord" type="text" style=" background-repeat: no-repeat; background-position: 88% 50%, 98% 50%;" title="검색">
+            <input id="search" type="text" style=" background-repeat: no-repeat; background-position: 88% 50%, 98% 50%;" title="검색">
         </div>
-        <div id="box">
-            <input  @click="search" id="google_search" type="button" value="Google 검색">
-        </div>
+
         <div><h3>>검색된 수 : {{pager.rowCount}}</h3></div>
+        <a @click="myAlert('aaaa')">테스트</a>
         <v-simple-table>
             <template v-slot:default>
                 <thead>
@@ -20,7 +19,6 @@
                 <tbody>
                 <tr v-for="item of list" :key="item.movieSeq">
                     <td>{{item.movieSeq}}</td>
-                    <td>{{item.rank}}</td>
                     <td>{{item.title}}</td>
                     <td>{{item.gap}}</td>
                     <td>{{item.rankDate}}</td>
@@ -31,7 +29,7 @@
         <div id="app-3" class ="text-center" style="margin:0 auto; width: 500px; height: 100px">
             <!--<v-pagination v-model="page" :length="5" :total-visible="5" label="Toggle circle"></v-pagination>-->
         <span v-if="pager.existPrev" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px">이전</span>
-        <span v-for="i of pages"  :key="i" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px" >{{i}}</span>
+        <span @click="transferPage(i)" v-for="i of pages"  :key="i" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px" >{{i}}</span>
         <span v-if="pager.existNext" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px">다음</span>
         </div>
     </div>
@@ -39,51 +37,35 @@
 
 <script>
     import{mapState} from "vuex";
-    import axios from "axios";
+    import {proxy} from "./mixins/proxy"
     export default {
-        methods:{
-            search(){
-                alert("d")
-            }
-        },
-        created(){
-            axios
-                .get(`${this.$store.state.search.context}/movies/${this.$store.state.search.searchWord}/${this.$store.state.search.pageNumber}`)
-                .then(res=>{
-                    res.data.list.forEach(elem => {this.list.push(elem)})
-                    this.pager = res.data.pager
-                    let i = this.pager.pageStart +1
-                    let arr = []
-                    console.log(`페이지 끝 : ${this.pager.pageEnd}`)
-                    for(; i <= this.pager.pageEnd +1; i++){
-                        arr.push(i)
-                    }
-                    this.pages = arr
-                })
-                .catch(err=>{
-                    alert(`영화 통신 실패 ${err}`)
-                })
-        },
-        data(){
-            return{
-                pageNumber: 0,
-                pages: [1,2,3,4,5],
-                list: [],
-                pager: {},
-                totalCount: '',
-                searchWord: '',
-                existPrev: false,
-
-            }
+        mixins: [proxy],
+        created(){ // creadted 먼저 작동 . 그다음에 paging 작동
+            console.log('페이징가기전: ')
+            let json = proxy.methods.paging(`${this.$store.state.search.context}/movies/null/0`)
+            this.$store.state.search.list = json.movies
+            this.$store.state.search.pages = json.pages
+            this.$store.state.search.pager = json.temp
+            console.log('페이징 다녀온다음: '+json.temp.pageSize)
         },
         computed: {
-            ...mapState({
-                count: state => state.movie.count,
-                movie: state=> state.movie.movie
-
+            ...mapState({  // vuex꺼
+                movie: state=> state.movie.movie,
+                list: state => state.search.list,
+                pages: state => state.search.pages,
+                pager: state => state.search.pager
             })
-        }
+        },
+        methods:{
+            transferPage(d){
+                alert(`이동 페이지 ${d-1}`)
+                this.$store.dispatch('search/transferPage',{cate:'movies',
+                    searchWord:'null',
+                    pageNumber: d-1})
+            }
+        },
     }
+
 </script>
 
 <style scoped>

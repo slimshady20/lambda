@@ -15,7 +15,6 @@
           <div id="box">
             <input  @click="search" id="google_search" type="button" value="Google 검색">
           </div>
-          <div><h3>>검색된 수 : {{count}}</h3></div>
 
           <div id="bottom">
             <div id="bottom_left">

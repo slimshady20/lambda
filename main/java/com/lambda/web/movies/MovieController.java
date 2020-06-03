@@ -27,7 +27,7 @@ public class MovieController {
         }else{
             pxy.print("검색어가 " + searchWord);
         }
-
+        pxy.print("넘어온페이지번호"+pageNumber);
         pager.setNowPage(pxy.integer(pageNumber));
         pager.setBlockSize(5);
         pager.setPageSize(5);
@@ -39,8 +39,8 @@ public class MovieController {
         for(MovieDTO m : list){ // 향상된 for 문 p 166 for(타입변수명 : 배열또는 컬렉션) {  반복할 문장 }
             pxy.print(m.toString());
         }
-     //   pxy.print(l.get(0).toString());
-            box.clear();
+       // pxy.print(list.get(0).toString());
+        box.clear();
         box.put("pager" , pager);
         box.put("list",list);
         return box.get();
