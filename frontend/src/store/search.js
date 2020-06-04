@@ -6,7 +6,8 @@ const state={
     pages: [],
     pager: {},
     pageNumber: '0',
-    searchWord: 'null'
+    searchWord: 'null',
+    item:{}
 }
 const actions={
     async find({commit},searchWord) {
@@ -27,6 +28,17 @@ const actions={
                 commit("TRANSFER", data)
             })
             .catch()
+    },
+
+    async retrieveOne({commit},payload){
+        axios.get(`${state.context}/${payload.cate}/${payload.searchWord}`)
+            .then(({data})=> {
+                commit("DETAIL", data)
+                router.push('/movieDetail')
+            })
+            .catch(()=>{
+            alert('통신 실패에')
+        })
     }
 
 
@@ -54,7 +66,11 @@ const mutations={
     TRANSFER(state,data){
         state.pager= data.pager
         state.list = data.list
-    }
+    },
+    DETAIL(state,data){
+        state.item =data
+
+}
 
 }
 const getters={}

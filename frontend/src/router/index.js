@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Soccer from "@/components/Soccer";
 import Home from "@/components/Home";
 import Movie from "@/components/Movie";
+import MovieDetail from "../components/MovieDetail";
 Vue.use(VueRouter);
 export default new VueRouter({
     mode: "history",
@@ -10,6 +11,7 @@ export default new VueRouter({
     routes: [
         { path: "/", component: Home },
         { path: "/soccer", component: Soccer },
-        {path: "/movie", component: Movie}
+        {path: "/movie", component: Movie},
+        {path: "/movieDetail", component:MovieDetail}
     ]
 });

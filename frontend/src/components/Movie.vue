@@ -5,7 +5,7 @@
         </div>
 
         <div><h3>>검색된 수 : {{pager.rowCount}}</h3></div>
-        <a @click="myAlert('aaaa')">테스트</a>
+        <span style="float: right; margin-right: 200px"><input id="searchWord" type="text" style="border: 1px solid black"><button @click="testerClick">검색</button></span>
         <v-simple-table>
             <template v-slot:default>
                 <thead>
@@ -19,7 +19,7 @@
                 <tbody>
                 <tr v-for="item of list" :key="item.movieSeq">
                     <td>{{item.movieSeq}}</td>
-                    <td>{{item.title}}</td>
+                    <td ><a href="#" @click="retrieveOne(item.movieSeq)">{{item.title}}</a></td>
                     <td>{{item.gap}}</td>
                     <td>{{item.rankDate}}</td>
                 </tr>
@@ -28,9 +28,9 @@
         </v-simple-table>
         <div id="app-3" class ="text-center" style="margin:0 auto; width: 500px; height: 100px">
             <!--<v-pagination v-model="page" :length="5" :total-visible="5" label="Toggle circle"></v-pagination>-->
-        <span v-if="pager.existPrev" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px">이전</span>
-        <span @click="transferPage(i)" v-for="i of pages"  :key="i" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px" >{{i}}</span>
-        <span v-if="pager.existNext" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px">다음</span>
+        <span @click="transferPage" v-if="pager.existPrev" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px">이전</span>
+        <span @click="transferPage(i-1)" v-for="i of pages"  :key="i" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px" >{{i}}</span>
+        <span @click="transferPage(pager.nextBlock)" v-if="pager.existNext" style = "width: 50px; height: 50px; border: 1px solid black; margin: 5px">다음</span>
         </div>
     </div>
 </template>
@@ -57,11 +57,24 @@
             })
         },
         methods:{
+            retrieveOne(movieSeq){
+                // null 체크할 필요가 없다
+                this.$store.dispatch('search/retrieveOne',{cate: 'movies',
+                    searchWord: movieSeq})
+            },
+            testerClick(){  // supplier 파라미터없고 리턴값있는
+              let searchWord =  document.getElementById('searchWord').value
+                if(searchWord === '')searchWord = 'null'  //null체크
+                this.$store.dispatch('search/transferPage',{cate: 'movies',
+                                                                           searchWord: searchWord,
+                                                                           pageNumber: 0})
+            },
             transferPage(d){
+                proxy.methods.tester(d)
                 alert(`이동 페이지 ${d-1}`)
                 this.$store.dispatch('search/transferPage',{cate:'movies',
                     searchWord:'null',
-                    pageNumber: d-1})
+                    pageNumber: d})
             }
         },
     }

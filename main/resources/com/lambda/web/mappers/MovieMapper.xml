@@ -24,13 +24,16 @@
             parameterType="com.lambda.web.proxy.Pager">
      select movie_seq movieSeq, rank, title, rank_date rankDate, gap
       from movie
+      <if test="searchWord != null">
+      where title like '%${searchWord}%'
+      </if>
       limit #{rowStart}, #{pageSize}    /* rowStart 번째부터  pagesize수만큼 가져옴*/
 
 
     </select>
     <select id="selectMovie" resultType="com.lambda.web.movies.MovieDTO"
                                 parameterType="string">
-          select movie_seq movieSeq, rank, title, rank_date rankDate
+          select movie_seq movieSeq, rank,gap, title, rank_date rankDate
       from movie
       where movie_seq = #{value}
     </select>

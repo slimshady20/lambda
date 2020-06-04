@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 @CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 @RestController
@@ -22,10 +23,12 @@ public class MovieController {
         @GetMapping("/{searchWord}/{pageNumber}")  //  @GetMapping("/list/{pageNumber}/{searchWord}")
     public Map<?,?> list(@PathVariable("pageNumber") String pageNumber,
                                    @PathVariable("searchWord") String searchWord){
-        if(searchWord.equals("")){
+        if(searchWord.equals("null")){  //front단에 null 로 보낸것 movie.vue에
             pxy.print("검색어가 없음");
+            pager.setSearchWord(""); // ""그래야 mybatis에서는 null로 먹힘
         }else{
             pxy.print("검색어가 " + searchWord);
+            pager.setSearchWord(searchWord);
         }
         pxy.print("넘어온페이지번호"+pageNumber);
         pager.setNowPage(pxy.integer(pageNumber));
@@ -45,4 +48,19 @@ public class MovieController {
         box.put("list",list);
         return box.get();
         }
+        @GetMapping("/{searchWord}")
+        public MovieDTO detail(@PathVariable("searchWord") String searchWord){
+        pxy.print(movieMapper.selectMovie(searchWord).toString());
+            return movieMapper.selectMovie(searchWord);
+//
+//        @GetMapping("/{searchWord}")
+//    public MovieDTO detail(@PathVariable("searchWord") String searchWord){
+//            pxy.print("검색어" + searchWord);
+//            Function<String,MovieDTO> f = p -> movieMapper.selectMovie(p);
+//            MovieDTO findOne = f.apply(searchWord);
+//            pxy.print(findOne.toString());
+//            box.clear();
+//            return f.apply(searchWord);
+        }
+
 }
