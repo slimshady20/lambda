@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 @CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 @RestController
@@ -37,6 +36,7 @@ public class MovieController {
         pager.paging();
         IFunction<Pager, List<MovieDTO>> f = p -> movieMapper.selectMovies(p);
         // parameterType = Pager, resultType = MovieDTO in MoiveMapper.xml
+
         List<MovieDTO> list = f.apply(pager);
         pxy.print("*******************************");
         for(MovieDTO m : list){ // 향상된 for 문 p 166 for(타입변수명 : 배열또는 컬렉션) {  반복할 문장 }
@@ -50,6 +50,7 @@ public class MovieController {
         }
         @GetMapping("/{searchWord}")
         public MovieDTO detail(@PathVariable("searchWord") String searchWord){
+            pxy.print("*************show just one movie*******");
         pxy.print(movieMapper.selectMovie(searchWord).toString());
             return movieMapper.selectMovie(searchWord);
 //

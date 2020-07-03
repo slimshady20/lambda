@@ -36,7 +36,6 @@ public class FileUploader extends Proxy {
         String[] arr = inventory.get().get(0).split(",");
         Player p = new Player();
         p.setPlayerId(arr[0]);
-
         p.setPlayerName(arr[1]);
         p.setePlayerName(arr[3]);
         p.setNickName(arr[4]);

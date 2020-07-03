@@ -1,27 +1,52 @@
 <template>
     <div>
-        <v-simple-table>
-            <template v-slot:default>
-                <thead>
+
+        <div>
+            <div class="top">
+                <div >
+                    <table height="50">
+                        <tr>
+                            <td>
+                                <router-link to = "/"><img class="logo" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" height="30" width="92"></router-link>
+                            </td>
+                            <td>
+                                <input id="search" type="text" style="background-repeat: no-repeat;" title="검색">
+                            </td>
+                            <td>
+                                <button id="search_btn" type="submit" tabindex="3" class="btn_submit">
+                                    <img src="https://images-na.ssl-images-amazon.com/images/I/41HeL2cy9LL.png" height="30" width="30">
+                                    <span class="ico_search_submit"></span>
+                                </button>
+                            </td>
+                            <td width="999" style="text-align: right; float: right">
+                                <a>Gmail</a>
+                                <a>이미지</a>
+                                <input id="login" type="button" value="로그인">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div> <!--search part-->
+            <div style="height: 100px;">
+            </div>
+            <table id="table" class="border_black" style="margin: 0 auto; ">
+                <h3 style="display: none">movieSeq : {{item.movieSeq}}</h3>
                 <tr>
-                    <th class="text-left">영화 순위</th>
-                    <th class="text-left">rank</th>
-                    <th class="text-left">영화 제목</th>
-                    <th class="text-left">변동폭</th>
-                    <th class="text-left">날짜</th>
+                    <td>예매순위</td>
+                    <td style="padding-left: 20px; font-size: 18px" height="18px">
+                        <span style="color:#FF382E">{{item.rank}}</span>위
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
                 <tr>
-                    <td>{{item.movieSeq}}</td>
-                    <td>{{item.rank}}</td>
-                    <td >{{item.title}}</td>
-                    <td>{{item.gap}}</td>
-                    <td>{{item.rankDate}}</td>
+                    <td>기준일</td>
+                    <td >{{item.rankDate}}</td>
                 </tr>
-                </tbody>
-            </template>
-        </v-simple-table>
+                <tr>
+                    <td>제 목</td>
+                    <td > {{item.title}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </template>
 <script>
@@ -41,25 +66,5 @@
 </script>
 
 <style scoped>
-    #search{
-        display: block;
-        margin: 0 auto;
-        width: 550px;
-        height: 50px;
-        font-size: 15pt;
-        box-shadow: 3px 3px 5px #C3C3C3;
-        border: 1px solid #EAEAEA;
-    }
-    #box{
-        text-align: center;
-    }
-    #google_search{
-        width: 135px;
-        height: 40px;
-        margin: 30px 3px;
-        border: none;
-        background-color: #F4F4F4;
-        font-weight: bold;
-        color: grey;
-    }
+        #search{border : 1px solid black}
 </style>
